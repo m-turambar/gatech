@@ -1,0 +1,79 @@
+/* Un buen teclado puede hacer una gran diferencia */
+
+HW1
+
+Q 5.b
+De alguna forma nos pregunta sobre maneras de mejorar ILP junto
+con instruction scheduling.
+Una pregunta de un alumno es si está hablando sobre mejoras de hardware
+o de software.
+También nos pide algo específico:
+Construir una nueva schedule y calcular el CPI.
+
+I: Para esta pregunta buscamos respuestas específicamente relacionadas
+a dependencias, y cómo mejorar el agendamiento de instrucciones.
+Segundo, sí, el approach que sugiere el que pregunta debería ser usado
+en el scheduling.
+
+Q 2
+La parte 3 nos pregunta si una instrucción E puede ser colocada en
+algunas ocasiones antes que la instrucción D. Para saber esto, el
+que pregunta piensa que necesitábamos conocer la latencia de ciclo de
+cada instrucción. Pero el prompt no da latencias de ciclo. Por qué
+no necesitamos saber las latencias de ciclos? "La respuesta parece
+depender de las latencias de ciclo de A, B, C, y E."
+
+I: La pregunta "pregunta" si las instrucciones pueden ser reordenadas.
+Qué afecta el reordenamiento de las instrucciones?
+
+Q 1
+La primera parte de la pregunta 1 declara que hay una única unidad
+de branching, y recursos ilimitados. Esos recursos ilimitados aplican
+a la memoria también? o seguimos estando limitados a una sola operación
+de memoria por cada instrucción VLIW? (negando el paralelismo)
+
+I: El hint de recursos ilimitados significa que puedes agendar tantas
+instrucciones del mismo tipo (e.g. add) como sea posible simultáneamente
+sin preocuparte sobre el número de adders disponibles en la máquina.
+
+Q Vliw slot and noop ordering
+
+I:
+
+
+********************************************************
+
+VLIW se refiere a arquitecturas diseñadas para explotar ILP.
+
+Mientras que un CPU convencional normalmente permite que los programas
+se ejecuten en secuencia, un procesador VLIW permite que los programas
+especifiquen instrucciones para ejecutarse en paralelo.
+
+********************************************************
+
+Glosario.
+
+Arquitectura superescalar. Un procesador superescalar es uno que
+implementa una forma de paralelismo conocida como paralelismo a nivel
+de instrucciones. (ILP). Puede ejecutar más de una instrucción en un
+sólo ciclo. Lo logra despachando múltiples instrucciones a diferentes
+unidades de ejecución en el procesador.
+
+Unidad de ejecución. (Unidad funcional). Es parte del CPU que realiza
+operaciones y cálculos. Puede que tenga su propia "control sequence
+unit", que no debe confundirse con la unidad de control de CPU, 
+algunos registros, y otras unidades internas tal como una ALU, AGU,
+FPU, LSU, BEU.
+
+LSU. Es una unidad de ejecución responsable de ejecutar todas las
+instrucciones de Load y Store. Básicamente mover los datos de los 
+registros a memoria.
+
+Out of order execution.
+
+IF = Instruction Fetch
+ID = Instruction Decode
+EX = Execute
+MEM = Memory access
+WB = Register Write back
+
