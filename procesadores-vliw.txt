@@ -183,3 +183,169 @@ ICache	= Instruction Cache
 *     * ------>* ICache *
 *     *        **********
 *******
+
+-----------
+
+Diagrama
+
+Instrucciones		Instrucciones FX		Instrucciones FP
+
+|      |            |		|				|		|
+  
+EU ... EU			FX ... FX				FP ... FP
+           			EU ... EU				EU ... EU
+
+|      |			|		|				|		|
+
+Register file		FX reg. file			FP reg. file
+
+-----------
+
+Trabajando
+
+* Las LIW son fetcheadas de memoria (Long instr word)
+
+* Un archivo de registro común, "multi-porteado", para
+fetchear los operando y guardar lso resultados.
+... es? o qué? slides de becarios
+
+* El acceso en paralelo al archivo de registro es posible
+gracias al cross bar r/w
+
+* Ejecución en las unidades funciones se lleva a cabo
+concurrentemente con la operación load/store entre RAM y
+el archivo del registro
+
+* Uno o más archivos de registro para los datos FX y FP.
+
+* "Depender" (wtf, annoying) en el compilador para encontrar
+paralelismo y generar código sin dependencias.
+
+-----------
+
+Diferencias entre VLIW y arq. superescalar
+
+Hay un diagrama muy grande que *NO* voy a transcribir.
+Pero, a grandes razgos, estos son los puntos que aprecio.
+
++ Ambas arq. tienen archivos de registro, y ambas tienen
+EUs, que sigo sin saber qué significan. Execution Unit?
+
+Ya, parece que la diferencia está en el pipeline? Uno parece
+ser secuencial (superscalar) y el otro paralelo (VLIW).
+
+- Superescalar tiene una unidad adicional, la Decode/
+Issue unit. De esta salen varias instrucciones, que van
+a diferentes EUs
+
++ Ambas tienen una unidad de Fetch, que va alimentada de
+Cache/Memoria. Pos sí no?
+
+------------
+
+VLIW vs Superscalar arch.
+
+** Formulación de instrucciones
+
+* Superscalar: Recive instrucciones convencionales 
+concebidas para procesadores secuenciales
+
+* VLIW: Recibe words de instrucciones largas, cada una
+comprendiendo un campo (o un opcode) para cada unidad de
+ejecución (EU).
+La longitud de la instrucción depende del número de EUs,
+y el tamaño del código para controlar cada unidad, (creo
+que empiezo a entenderle), tal como la longitud del opcode.
+64 - 1024 bits es lo normal, mucho más grandes que las words
+convencionales.
+
+** Agendar instrucciones
+
+* Superscalar:
+Se hace de forma dinámica en runtime por el hardware
+Las dependencias de datos se checan y resuelven en hardware
+Se necesita una "look ahead hardware window" para fetchear
+instrucciones
+
+* VLIW:
+Se hace de forma estática por el compilador.
+Las dependencias se checan por el compilador.
+En caso de que opcodes no se llenen, se desperdicia ancho
+de banda de la instrucción.
+
+------------
+
+** Comparación: 	CISC	RISC	VLIW
+
+Es difícil escribir la tabla aquí, así que la redactaré:
+
+* Tamaño de la instrucción: En CISC varía, en RISC es un
+tamaño, usualmente 32 bits, en VLIW es "un tamaño", whatever
+that means.
+
+* Semántica de las instrucciones: En CISC varía de "simple"
+a "compleja"; posiblemente muchas operaciones dependientes
+por instrucción. En RISC, casi siempre es una operación
+simple, en VLIW son muchas simples operaciones indepen-
+dientes entre sí.
+
+No estoy entendiendo mucho.
+
+* Registros: 
+En CISC hay pocos, algunas veces especiales.
+En RISC hay muchos multipropósito (ARM v7?)
+En VLIW también hay muchos multipropósito
+
+* Diseño del hardware
+En CISC, se explotan implementaciones de microcódigo (?)
+En RISC, se explotan implementaciones con un pipeline
+y no hay microcódigo
+En VLIW, se explotan implementaciones con múltiples
+pipelines, sin microcódigo, y sin lógica compleja de
+despachamiento de instrucciones.
+
+--------------
+
+** Ventajas del VLIW
+
+* Las dependencias son determinadas por el compilador.
+
+* Las unidades de las funciones (?), son asignadas por el
+compilador, y corresponden a la posición dentro del paquete
+de instrucciones
+
+* Reduce la complejidad del hardware
+-Las tareas como decodificar, detección de dependencias de
+datos, problemas de isntrucciones, etc, se vuelven simples.
+-Asegura potencialmente un reloj más rápido (?)
+-Asegura bajo consumo de poder.
+
+-------------
+
+** Desventajas de VLIW
+
+Mayor complejidad del compilador
+
+Compatibilidad entre implementaciones: Las optimizaciones del
+
+ya me harté. putos perros ladrando. no puedo concentrarme.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
